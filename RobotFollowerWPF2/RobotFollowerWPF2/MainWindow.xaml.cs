@@ -19,11 +19,12 @@ namespace RobotFollowerWPF2
         public float needToMoveZ = 0;
         string commandText = "";
         public bool currentlyTracking = false;
-        public enum commands { FORWARD, BACK, TURN_LEFT, TURN_RIGHT, STOP };
         double personMagnitude = 0;
         double personAngle = 0;
 
-        public Queue<commands> commandQueue = new Queue<commands>();
+        bool stop = false;
+
+        public Queue<Command> commandQueue = new Queue<Command>();
 
         SerialCommunication arduino = new SerialCommunication();
         SkeletonHandler skeletonHandler;
@@ -59,54 +60,119 @@ namespace RobotFollowerWPF2
 
         public void Controller()
         {
+
+            double rotation = 0;
+            //magnitude 0.35 -> 39.5 inches / 5 seconds -> 2.3 mph
+            const double CONSTANTSPEED = 0.5;
+
             int missCounter = 0; //Counts the number of loops that the person has not being tracked
-            commands lastCommand = commands.STOP;
+            Command lastCommand = new Command(Command.actions.STOP);
 
             while (true)
             {
+                stop = false;
+                personAngle = Math.Atan2(personX, personZ) * (180 / Math.PI); //angle of the person in degrees
+                personMagnitude = Math.Sqrt(Math.Pow(personX, 2) + Math.Pow(personZ, 2)); //distance from robot to person
+                rotation = personAngle / 90.0;
+                double speed = CONSTANTSPEED;
+
                 if (personZ > 0) //check if the person is being tracked
                 {
                     missCounter = 0;
+
+                    //BACK
                     if (personMagnitude < 1.3)
                     {
-                        commandQueue.Enqueue(commands.BACK);
-                        lastCommand = commands.BACK;
-                    }
-                    else if (personMagnitude < 1.75)
-                    {
-                        commandQueue.Enqueue(commands.STOP);
-                        lastCommand = commands.STOP;
-                        //commandText = commands.STOP.ToString();
-                    }
-                    else
-                    {
-                        if (personX < -.3)
-                        {
-                            commandQueue.Enqueue(commands.TURN_RIGHT);
-                            lastCommand = commands.TURN_RIGHT;
-                            //commandText = commands.TURN_RIGHT.ToString();
-                        }
-                        else if (personX > .3)
-                        {
-                            commandQueue.Enqueue(commands.TURN_LEFT);
-                            lastCommand = commands.TURN_LEFT;
-                            //commandText = commands.TURN_LEFT.ToString();
-                        }
-                        else
-                        {
-                            commandQueue.Enqueue(commands.FORWARD);
-                            lastCommand = commands.FORWARD;
-                            //commandText = commands.FORWARD.ToString();
-                        }
+                        Command newCommand = new Command(Command.actions.BACK, speed, 0, 0);
+                        commandQueue.Enqueue(newCommand);
+                        lastCommand = newCommand;
                     }
 
+                    //STOP
+                    else if (personMagnitude > 1.3 && personMagnitude < 1.75)
+                    {
+                        //TURN
+                        Command newCommand;
+                        if (personX < -0.3)
+                        {
+                            newCommand = new Command(Command.actions.TURN_RIGHT, speed * 2, 0, -1);
+                            commandQueue.Enqueue(newCommand);
+                            lastCommand = newCommand;
+                        }
+                        else if (personX > 0.3)
+                        {
+                            newCommand = new Command(Command.actions.TURN_LEFT, speed * 2, 0, 1);
+                            commandQueue.Enqueue(newCommand);
+                            lastCommand = newCommand;
+                        }
+
+                        //JUST STOP
+                        else
+                        {
+                            newCommand = new Command(Command.actions.STOP);
+                            stop = true;
+                            if (lastCommand != newCommand)
+                            {
+                                commandQueue.Enqueue(newCommand);
+                                lastCommand = newCommand;
+                            }
+
+                        }
+
+                    }
+
+                    //FORWARD
+                    else if (personMagnitude > 1.75)
+                    {
+                        //TURN
+                        Command newCommand;
+                        if (personX < -0.3)
+                        {
+                            //newCommand = new Command(Command.actions.FORWARD, speed, 0, 0);
+                            //for (int i = 0; i < 10; i++)
+                            //{
+                            //    commandQueue.Enqueue(newCommand);
+                            //}
+                            newCommand = new Command(Command.actions.TURN_RIGHT, speed, 0, rotation);
+                            //for (int i = 0; i < 10; i++)
+                            //{
+                            //    commandQueue.Enqueue(newCommand);
+                            //}
+                            commandQueue.Enqueue(newCommand);
+                            lastCommand = newCommand;
+                        }
+                        else if (personX > 0.3)
+                        {
+                            //newCommand = new Command(Command.actions.FORWARD, speed, 0, 0);
+                            //for (int i = 0; i < 10; i++)
+                            //{
+                            //    commandQueue.Enqueue(newCommand);
+                            //}
+                            newCommand = new Command(Command.actions.TURN_LEFT, speed, 0, rotation);
+                            //for (int i = 0; i < 10; i++)
+                            //{
+                            //    commandQueue.Enqueue(newCommand);
+                            //}
+                            commandQueue.Enqueue(newCommand);
+                            lastCommand = newCommand;
+                        }
+
+                        //JUST FORWARD
+                        else
+                        {
+                            newCommand = new Command(Command.actions.FORWARD, speed, 0, 0);
+                            commandQueue.Enqueue(newCommand);
+                            lastCommand = newCommand;
+                        }
+                    }
                 }
                 else //if the person is not being tracked
                 {
                     missCounter++;
-                    if (missCounter > 20)
+                    if (missCounter > 30)
                     {
-                        commandQueue.Enqueue(commands.STOP);
+                        commandQueue.Enqueue(new Command(Command.actions.STOP));
+                        stop = true;
                     }
                     else
                     {
@@ -121,43 +187,40 @@ namespace RobotFollowerWPF2
 
         public void CommandExecutor()
         {
-            //magnitude 0.35 -> 39.5 inches / 5 seconds -> 2.3 mph
-            double constantMag = 0.5;
-
             // Thread.Sleep(500);
             while (true)
             {
-                personAngle = Math.Atan2(personX, personZ) * (180 / Math.PI);
-                personMagnitude = Math.Sqrt(Math.Pow(personX, 2) + Math.Pow(personZ, 2));
-                double rotation = personAngle / 90;
-
-
+                if (stop)
+                {
+                    commandQueue.Clear();
+                    commandQueue.Enqueue(new Command(Command.actions.STOP, 0, 0, 0));
+                }
                 if (commandQueue.Count > 0)
                 {
-                    commands currentCommand = commandQueue.Dequeue();
-                    commandText = currentCommand.ToString();
-                    switch (currentCommand)
+                    Command currentCommand = commandQueue.Dequeue();
+                    switch (currentCommand.action)
                     {
-                        case commands.STOP:
+                        case Command.actions.FORWARD:
+                            arduino.SendString("MOVE 0 " + currentCommand.magnitude + " 0");
+                            break;
+                        case Command.actions.BACK:
+                            arduino.SendString("MOVE 0 -" + currentCommand.magnitude + " 0");
+                            break;
+                        case Command.actions.TURN_LEFT:
+                            arduino.SendString("MOVE 0 " + currentCommand.magnitude + " " + currentCommand.rotation);
+                            break;
+                        case Command.actions.TURN_RIGHT:
+                            arduino.SendString("MOVE 0 " + currentCommand.magnitude + " " + currentCommand.rotation);
+                            break;
+                        case Command.actions.STOP:
                             arduino.SendString("STOP");
                             break;
-                        case commands.FORWARD:
-                            arduino.SendString("MOVE 0 " + constantMag.ToString() + " 0");
-                            break;
-                        case commands.BACK:
-                            arduino.SendString("MOVE 0 -" + constantMag.ToString() + " 0");
-                            break;
-                        case commands.TURN_LEFT:
-                            arduino.SendString("MOVE 0 " + constantMag.ToString() + " " + rotation);
-                            break;
-                        case commands.TURN_RIGHT:
-                            arduino.SendString("MOVE 0 " + constantMag.ToString() + " " + rotation);
-                            break;
                         default:
+                            arduino.SendString("STOP");
                             break;
                     }
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(200);
             }
         }
 

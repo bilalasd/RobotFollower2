@@ -90,8 +90,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="SerialCommunication.cs" />
-    <Compile Include="SkeletonHandler.cs" />
+    <Compile Include="Helper Classes\Command.cs" />
+    <Compile Include="Helper Classes\SerialCommunication.cs" />
+    <Compile Include="Helper Classes\SkeletonHandler.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -100,8 +101,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ColorHandler.cs" />
-    <Compile Include="Extension.cs" />
+    <Compile Include="Helper Classes\ColorHandler.cs" />
+    <Compile Include="Helper Classes\Extension.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

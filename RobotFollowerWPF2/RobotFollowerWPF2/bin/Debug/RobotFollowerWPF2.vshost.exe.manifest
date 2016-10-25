@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RobotFollowerWPF2.exe" size="24040">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RobotFollowerWPF2.exe" size="25064">
       <assemblyIdentity name="RobotFollowerWPF2" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>vfE5iOd0Fj1ubbPL7NWKZnwlHc3tDbUjWObQiCbZ7ME=</dsig:DigestValue>
+        <dsig:DigestValue>yywFHt8GqWu7eq/8k/7hgNCYYnSOAuqf+XSA5pwiFzc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
