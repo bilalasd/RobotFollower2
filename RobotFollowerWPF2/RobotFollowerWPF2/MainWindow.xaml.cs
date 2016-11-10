@@ -60,10 +60,9 @@ namespace RobotFollowerWPF2
 
         public void Controller()
         {
-
             double rotation = 0;
             //magnitude 0.35 -> 39.5 inches / 5 seconds -> 2.3 mph
-            const double CONSTANTSPEED = 0.5;
+            const double CONSTANTSPEED = .5;
 
             int missCounter = 0; //Counts the number of loops that the person has not being tracked
             Command lastCommand = new Command(Command.actions.STOP);
@@ -128,31 +127,13 @@ namespace RobotFollowerWPF2
                         Command newCommand;
                         if (personX < -0.3)
                         {
-                            //newCommand = new Command(Command.actions.FORWARD, speed, 0, 0);
-                            //for (int i = 0; i < 10; i++)
-                            //{
-                            //    commandQueue.Enqueue(newCommand);
-                            //}
                             newCommand = new Command(Command.actions.TURN_RIGHT, speed, 0, rotation);
-                            //for (int i = 0; i < 10; i++)
-                            //{
-                            //    commandQueue.Enqueue(newCommand);
-                            //}
                             commandQueue.Enqueue(newCommand);
                             lastCommand = newCommand;
                         }
                         else if (personX > 0.3)
                         {
-                            //newCommand = new Command(Command.actions.FORWARD, speed, 0, 0);
-                            //for (int i = 0; i < 10; i++)
-                            //{
-                            //    commandQueue.Enqueue(newCommand);
-                            //}
                             newCommand = new Command(Command.actions.TURN_LEFT, speed, 0, rotation);
-                            //for (int i = 0; i < 10; i++)
-                            //{
-                            //    commandQueue.Enqueue(newCommand);
-                            //}
                             commandQueue.Enqueue(newCommand);
                             lastCommand = newCommand;
                         }
