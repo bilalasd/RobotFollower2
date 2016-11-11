@@ -62,7 +62,7 @@ namespace RobotFollowerWPF2
         {
             double rotation = 0;
             //magnitude 0.35 -> 39.5 inches / 5 seconds -> 2.3 mph
-            const double CONSTANTSPEED = .5;
+            const double CONSTANTSPEED = .75;
 
             int missCounter = 0; //Counts the number of loops that the person has not being tracked
             Command lastCommand = new Command(Command.actions.STOP);
