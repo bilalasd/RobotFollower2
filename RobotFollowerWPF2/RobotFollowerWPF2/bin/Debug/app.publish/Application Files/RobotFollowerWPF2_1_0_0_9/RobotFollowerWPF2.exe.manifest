@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="RobotFollowerWPF2.exe" version="1.0.0.9" publicKeyToken="c7d355702ec9a0c7" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="RobotFollowerWPF2" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="RobotFollowerWPF2.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.Kinect.dll" size="173056">
+      <assemblyIdentity name="Microsoft.Kinect" version="1.8.0.0" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>sTNbBT9HDF9w++RQJyE4uAbSULGYqyETizV0n1EB2dg=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RobotFollowerWPF2.exe" size="25064">
+      <assemblyIdentity name="RobotFollowerWPF2" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>9AuWGNZLHPeJDmh3jKI0pSFvvijmTMU4uVNTDSCcnC4=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="RobotFollowerWPF2.exe.config" size="189">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>6N7MliNbVJSIAIPrecIshMbZ7zEoKLr5SQvud4LDUOw=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=MUHAMMAD-T520\Muhammad" issuerKeyHash="7112a68ed4e46b8e49c14f6ca26d63804b1922d8" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>5AXfcK/RdRo6VoVgGFl4yNk1pR7QCsgiz7oAA2Jvjpk=</DigestValue></Reference></SignedInfo><SignatureValue>znLByrAeEqb71O4kh7W1+fsiOVYnVthNLwtzwnKp9rxyWIRg1+UgKvSnaFxBHW5nc+DJPxwnZmdWhjqo09PinCiclgbj48X28nlk9KZiQxxBFgm5zlb1h8AcQiWYeja1CZLiWa6Vud2VdA26oK7ZFOAcy8X8luyVcaP5FXx5WgQ=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>3nI50d+UCSZ2CxJG42ju7cA3uES5qFZKOqTj7qV7Ozq8eGKGS0IT7F0xWWQwQMJ0+8a50p2wUvMznBlI2hpLg8eD8uGgxn6tTpspAt1UsEumjJ8K/t93Spj6ZKCt0M718xKTSLc4adRe1J5VFKi6zSayXN562qzCc1852bWRQYs=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="998e6f620300bacf22c80ad01ea535d9c87859186085563a1a75d1af70df05e4" Description="" Url=""><as:assemblyIdentity name="RobotFollowerWPF2.exe" version="1.0.0.9" publicKeyToken="c7d355702ec9a0c7" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=MUHAMMAD-T520\Muhammad</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>IZ63QaVBCJaRlYScJHuxy2ZD0542wYIAmgXsm2YWHNk=</DigestValue></Reference></SignedInfo><SignatureValue>hJtF55ll+q5Ho44Podb3ofCAe4vRnA3ARb14R1FFZzKAW3cD2N4UjornaTX+IfWfXG8jKbA+Yh6FivXqYpGkXWTwKrkkeQ7G8iJeD0VoVV/yYNuI52C5gwtCEJxW7D0WWms3bi0IcMOMA3PkSjuJt3gWY56CwT6fwCetQpNKp/U=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>3nI50d+UCSZ2CxJG42ju7cA3uES5qFZKOqTj7qV7Ozq8eGKGS0IT7F0xWWQwQMJ0+8a50p2wUvMznBlI2hpLg8eD8uGgxn6tTpspAt1UsEumjJ8K/t93Spj6ZKCt0M718xKTSLc4adRe1J5VFKi6zSayXN562qzCc1852bWRQYs=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB8TCCAVqgAwIBAgIQWAXNOl2dw45ON7VmrNlcPjANBgkqhkiG9w0BAQsFADA3MTUwMwYDVQQDHiwATQBVAEgAQQBNAE0AQQBEAC0AVAA1ADIAMABcAE0AdQBoAGEAbQBtAGEAZDAeFw0xNjA0MjkwMDAzMTdaFw0xNzA0MjkwNjAzMTdaMDcxNTAzBgNVBAMeLABNAFUASABBAE0ATQBBAEQALQBUADUAMgAwAFwATQB1AGgAYQBtAG0AYQBkMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDecjnR35QJJnYLEkbjaO7twDe4RLmoVko6pOPupXs7Orx4YoZLQhPsXTFZZDBAwnT7xrnSnbBS8zOcGUjaGkuDx4Py4aDGfq1OmykC3VSwS6aMnwr+33dKmPpkoK3QzvXzEpNItzhp1F7UnlUUqLrNJrJc3nrarMJzXznZtZFBiwIDAQABMA0GCSqGSIb3DQEBCwUAA4GBALpOD8j94R+nRx+Kjzi6yLmIkmD1xa5IWrBr8GbBbQkw7Z9NCWHHOhebaVz5EimBqaE8P6/SkeTz21/nZ5Xi0uq4ZO+X6myQT+TIGeuw2g9OybK/Uf/skTdbi5PQLTrpC3ZYwjv5+WjIqPC+C2OkFjY+knaGsNfbZPGu1vjPlt7T</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
