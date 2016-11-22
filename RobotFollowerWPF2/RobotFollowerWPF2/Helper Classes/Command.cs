@@ -8,20 +8,26 @@ namespace RobotFollowerWPF2
 {
     public class Command
     {
-        public Command(actions initialAction, double initialMagnitude, double initialAngle, double initialRotation)
+
+        public double magnitude = 0;
+        public double angle = 0;
+        public double rotation = 0;
+        //public actions action;
+
+        public Command(double initialMagnitude, double initialAngle, double initialRotation)
         {
-            action = initialAction;
+            //action = initialAction;
             magnitude = initialMagnitude;
             angle = initialAngle;
             rotation = initialRotation;
         }
 
-        public Command(actions initialAction)
-        {
-            action = initialAction;
-            magnitude = 0;
-            angle = 0;
-        }
+        //public Command(actions initialAction)
+        //{
+        //    //action = initialAction;
+        //    magnitude = 0;
+        //    angle = 0;
+        //}
 
         public enum actions
         {
@@ -32,10 +38,7 @@ namespace RobotFollowerWPF2
             STOP
         };
 
-        public double magnitude = 0;
-        public double angle = 0;
-        public double rotation = 0;
-        public actions action;
+
 
 
     }

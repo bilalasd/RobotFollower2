@@ -1,23 +1,25 @@
 #include <NewPing.h>
 #include "MovementController.h"
-#include <Encoder.h>
-#include <ADXL345.h>
-#include <I2Cdev.h>
-#include <Wire.h>
-#include <SPI.h>
+//#include <Encoder.h>
+//#include <ADXL345.h>
+//#include <I2Cdev.h>
+//#include <Wire.h>
+//#include <SPI.h>
 
 
 MovementControllerClass motorCont;
-NewPing sonar1(26, 24);
-NewPing sonar2(50, 48);
 
-double lastGyroReadTime = 0;
-double yawDriftValuePerSec = 0;
-double pitchDriftValuePerSec = 0;
-double rollDriftValuePerSec = 0;
-double yaw = 0;
-double pitch = 0;
-double roll = 0;
+//first param trigger pin, seccond param echo pin
+NewPing leftSonar(50, 48);
+NewPing rightSonar(46, 44);
+
+//double lastGyroReadTime = 0;
+//double yawDriftValuePerSec = 0;
+//double pitchDriftValuePerSec = 0;
+//double rollDriftValuePerSec = 0;
+//double yaw = 0;
+//double pitch = 0;
+//double roll = 0;
 
 void setup()
 {
@@ -31,6 +33,14 @@ void setup()
 void loop()
 {
   SerialHandler();
+  //GetSonarValues();
+}
+
+void GetSonarValues() {
+  Serial.print("leftSonar ");
+  Serial.print(leftSonar.ping_cm());
+  Serial.print("rightSonar ");
+  Serial.println(rightSonar.ping_cm());
 }
 
 void SerialHandler() {
@@ -61,9 +71,9 @@ void SerialHandler() {
         motorCont.MoveInDirecion(magnitude, angle, rotation);
       }
 
-      Serial.print("Moving in Direction: ");
+      Serial.print("Moving at Angle: ");
       Serial.print(angle);
-      Serial.print(" Magniture: ");
+      Serial.print(" Magnitude: ");
       Serial.print(magnitude);
       Serial.print(" Rotation: ");
       Serial.println(rotation);
@@ -71,6 +81,18 @@ void SerialHandler() {
     else if (cmd.startsWith("RUALIVE"))
     {
       Serial.println("ALIVE");
+    }
+    else if (cmd.startsWith("sonar"))
+    {
+      Serial.print("leftSonar ");
+      Serial.print(leftSonar.ping_cm());
+      Serial.print(",rightSonar ");
+      Serial.println(rightSonar.ping_cm());
+    }
+    else if (cmd.startsWith("rightSonar"))
+    {
+      Serial.print("rightSonar ");
+      Serial.println(rightSonar.ping_cm());
     }
   }
 

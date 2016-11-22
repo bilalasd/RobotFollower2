@@ -14,13 +14,15 @@ namespace RobotFollowerWPF2
     {
         public List<string> PortNameToDetect = new List<string>();
         bool tryAgain = true;
-        public bool currentlySending = false;
+        bool currentlySending = false;
         SerialPort serialArduino;
         string lastCommand = "";
         public bool currentlyConnected = false;
 
-        public bool responseReceived = false;
-        public string stringReceived = "";
+        bool responseReceived = false;
+        string stringReceived = "";
+        int leftSonarValue = 0;
+        int rightSonarValue = 0;
 
         public SerialCommunication()
         {
@@ -65,6 +67,7 @@ namespace RobotFollowerWPF2
                     Thread.Sleep(5000);
                     serialArduino.DataReceived += new SerialDataReceivedEventHandler(SerialDataReceivedHandlerArduino);
                     CheckConnect();
+                    new Thread(new ThreadStart(askForSonarValues)).Start();
                 }
                 catch (Exception e)
                 {
@@ -75,7 +78,7 @@ namespace RobotFollowerWPF2
             }
         }
 
-        public bool CheckConnect()
+        bool CheckConnect()
         {
             currentlySending = true;
             responseReceived = false;
@@ -149,7 +152,31 @@ namespace RobotFollowerWPF2
 
         }
 
-        public string AutoDetectPort()
+        public int getRightSonar()
+        {
+            return rightSonarValue;
+            //SendString("leftSonar");
+            //while (!responseReceived)
+            //{
+            //    Thread.Sleep(10);
+            //}
+            ////Console.WriteLine("Left Sonar Value received: " + stringReceived);
+            //return Convert.ToInt32(stringReceived);
+        }
+
+        public int getLeftSonar()
+        {
+            return leftSonarValue;
+            //SendString("rightSonar");
+            //while (!responseReceived)
+            //{
+            //    Thread.Sleep(10);
+            //}
+            ////Console.WriteLine("Right Sonar Value received: " + stringReceived);
+            //return Convert.ToInt32(stringReceived);
+        }
+
+        string AutoDetectPort()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PnPEntity WHERE ClassGuid=\"{4d36e978-e325-11ce-bfc1-08002be10318}\"");
 
@@ -182,13 +209,44 @@ namespace RobotFollowerWPF2
             return "NOTFOUND";
         }
 
+        void askForSonarValues()
+        {
+            while (true)
+            {
+                SendString("sonar");
+                Thread.Sleep(400);
+                //SendString("rightSonar");
+                //Thread.Sleep(500);
+            }
+        }
+
+        public void sendMoveCommand(double angle, double magnitude, double rotation)
+        {
+            SendString("MOVE " + angle + " " + magnitude + " " + rotation);
+        }
+
         private void SerialDataReceivedHandlerArduino(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort sp = (SerialPort)sender;
             stringReceived = sp.ReadLine();
+
+            char[] delimeter = { ',' };
+
+            if (stringReceived.Trim().StartsWith("leftSonar"))
+            {
+                string left = stringReceived.Trim().Split(delimeter)[0];
+                string right = stringReceived.Trim().Split(delimeter)[1];
+                leftSonarValue = Convert.ToInt32(left.Trim().Replace("leftSonar ", "").Trim());
+                rightSonarValue = Convert.ToInt32(right.Trim().Replace("rightSonar ", "").Trim());
+            }
+            else if (stringReceived.Trim().StartsWith("rightSonar"))
+            {
+                rightSonarValue = Convert.ToInt32(stringReceived.Trim().Replace("rightSonar ", "").Trim());
+            }
+
             Debug.WriteLine(stringReceived);
             responseReceived = true;
-            Debug.Print(stringReceived);
+            // Debug.Print(stringReceived);
         }
     }
 }
